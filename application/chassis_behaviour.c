@@ -158,16 +158,6 @@ static void chassis_infantry_follow_gimbal_yaw_control(fp32 *vx_set, fp32 *vy_se
   * @param[in]      chassis_move_rc_to_vector: chassis data
   * @retval         none
   */
-/**
-  * @brief          底盘跟随底盘yaw的行为状态机下，底盘模式是跟随底盘角度，底盘旋转速度会根据角度差计算底盘旋转的角速度
-  * @author         RM
-  * @param[in]      vx_set前进的速度,正值 前进速度， 负值 后退速度
-  * @param[in]      vy_set左右的速度,正值 左移速度， 负值 右移速度
-  * @param[in]      angle_set底盘设置的yaw，范围 -PI到PI
-  * @param[in]      chassis_move_rc_to_vector底盘数据
-  * @retval         返回空
-  */
-static void chassis_engineer_follow_chassis_yaw_control(fp32 *vx_set, fp32 *vy_set, fp32 *angle_set, chassis_move_t *chassis_move_rc_to_vector);
 
 /**
   * @brief          when chassis behaviour mode is CHASSIS_NO_FOLLOW_YAW, chassis control mode is speed control mode.
@@ -281,10 +271,6 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
   {
     chassis_move_mode->chassis_mode = CHASSIS_VECTOR_FOLLOW_GIMBAL_YAW;
   }
-  else if (chassis_behaviour_mode == CHASSIS_ENGINEER_FOLLOW_CHASSIS_YAW)
-  {
-    chassis_move_mode->chassis_mode = CHASSIS_VECTOR_FOLLOW_CHASSIS_YAW;
-  }
   else if (chassis_behaviour_mode == CHASSIS_NO_FOLLOW_YAW)
   {
     chassis_move_mode->chassis_mode = CHASSIS_VECTOR_NO_FOLLOW_YAW;
@@ -337,10 +323,6 @@ void chassis_behaviour_control_set(fp32 *vx_set, fp32 *vy_set, fp32 *angle_set, 
   else if (chassis_behaviour_mode == CHASSIS_SWING_GIMBAL_NO_MOVE)
   {
     chassis_infantry_follow_gimbal_yaw_control(vx_set, vy_set, angle_set, chassis_move_rc_to_vector);
-  }
-  else if (chassis_behaviour_mode == CHASSIS_ENGINEER_FOLLOW_CHASSIS_YAW)
-  {
-    chassis_engineer_follow_chassis_yaw_control(vx_set, vy_set, angle_set, chassis_move_rc_to_vector);
   }
   else if (chassis_behaviour_mode == CHASSIS_NO_FOLLOW_YAW)
   {
@@ -460,27 +442,6 @@ static void chassis_infantry_follow_gimbal_yaw_control(fp32 *vx_set, fp32 *vy_se
   * @param[in]      chassis_move_rc_to_vector: chassis data
   * @retval         none
   */
-/**
-  * @brief          底盘跟随底盘yaw的行为状态机下，底盘模式是跟随底盘角度，底盘旋转速度会根据角度差计算底盘旋转的角速度
-  * @author         RM
-  * @param[in]      vx_set前进的速度,正值 前进速度， 负值 后退速度
-  * @param[in]      vy_set左右的速度,正值 左移速度， 负值 右移速度
-  * @param[in]      angle_set底盘设置的yaw，范围 -PI到PI
-  * @param[in]      chassis_move_rc_to_vector底盘数据
-  * @retval         返回空
-  */
-
-static void chassis_engineer_follow_chassis_yaw_control(fp32 *vx_set, fp32 *vy_set, fp32 *angle_set, chassis_move_t *chassis_move_rc_to_vector)
-{
-    if (vx_set == NULL || vy_set == NULL || angle_set == NULL || chassis_move_rc_to_vector == NULL)
-    {
-        return;
-    }
-
-    chassis_rc_to_control_vector(vx_set, vy_set, chassis_move_rc_to_vector);
-
-    *angle_set = rad_format(chassis_move_rc_to_vector->chassis_yaw_set - CHASSIS_ANGLE_Z_RC_SEN * chassis_move_rc_to_vector->chassis_RC->rc.ch[CHASSIS_WZ_CHANNEL]);
-}
 
 /**
   * @brief          when chassis behaviour mode is CHASSIS_NO_FOLLOW_YAW, chassis control mode is speed control mode.
