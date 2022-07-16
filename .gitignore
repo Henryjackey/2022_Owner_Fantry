@@ -1,0 +1,10 @@
+MDK-ARM/.vscode
+MDK-ARM/DebugConfig
+MDK-ARM/RTE
+MDK-ARM/standard_tpye_c
+MDK-ARM/standard_board_c
+MDK-ARM/standard_robot.uvguix.*
+MDK-ARM/standard_robot.uvoptx
+cmake-build-debug/
+CMakeLists.txt
+.idea/
