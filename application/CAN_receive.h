@@ -62,6 +62,7 @@ typedef struct {
     fp32 CapVot;
     fp32 TestCurrent;
     fp32 Target_Power;
+	  uint8_t cap_percent;
 } cap_measure_t;
 
 /**

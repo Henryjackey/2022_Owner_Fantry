@@ -363,7 +363,7 @@ void gimbal_task(void const *pvParameters)
             }
             else
             {
-            CAN_cmd_gimbal(yaw_can_set_current, pitch_can_set_current, 0, 0 );  
+            CAN_cmd_gimbal(yaw_can_set_current, pitch_can_set_current, *shoot_can_set_current, *(shoot_can_set_current+1));  
 //							CAN_cmd_gimbal(yaw_can_set_current, pitch_can_set_current, *shoot_can_set_current,*(shoot_can_set_current+1) );
             }
         }

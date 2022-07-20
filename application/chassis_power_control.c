@@ -66,6 +66,33 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
 	  fp32 power_total_current_limit = 0.0f;
 	  fp32 cap_total_current_limit = 0.0f;
     uint8_t robot_id = get_robot_id();
+/*ADD*/
+	  static uint8_t move_press_state = 0;
+		static uint8_t last_move_press_state = 0;
+		static uint8_t cap_set_persent = 95;
+	  last_move_press_state = move_press_state;
+	
+	  	if(chassis_power_control->chassis_RC->key.v & 0x2F)  //WASD SHIFT
+		{
+			move_press_state = 1;
+		}
+		else
+		{
+			move_press_state = 0;
+		}
+		if(last_move_press_state == 0 && move_press_state == 1)
+		{
+				cap_set_persent = cap_measure.cap_percent-2;
+		}
+		if(move_press_state == 0)
+		{
+			cap_set_persent = cap_measure.cap_percent;
+		}
+		if(cap_state)
+		{
+				cap_set_persent = 15;
+		}
+		
 	
 	  if(!toe_is_error(CAP_TOE))
 			{

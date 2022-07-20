@@ -40,11 +40,12 @@ extern CAN_HandleTypeDef hcan2;
         (ptr)->temperate = (data)[6];                                   \
     }
 //capacitance measure data		
-#define get_cap_measure(ptr, data)                               \
-  {                                                                \
-		(ptr)->InputVot = ((fp32) ((data)[1] << 8 | (data)[0]))/100;      \
-		(ptr)->CapVot = ((fp32) ((data)[3] <<8 | (data) [2]))/100; \
-		(ptr) -> TestCurrent = ((fp32) ((data)[5] <<8 | (data) [4]))/100;   \
+#define get_cap_measure(ptr, data)                                 \
+  {                                                                 \
+		(ptr)->InputVot = ((fp32) ((data)[1] << 8 | (data)[0]))/100;     \
+		(ptr)->CapVot = ((fp32) ((data)[3] <<8 | (data) [2]))/100;        \
+		(ptr) -> TestCurrent = ((fp32) ((data)[5] <<8 | (data) [4]))/100;  \
+    (ptr) -> cap_percent = (data)[6];																  	\
 		(ptr) -> Target_Power = ((fp32) ((data)[7] <<8 | (data) [6]))/100;   \
   }
 	
